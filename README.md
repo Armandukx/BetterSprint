@@ -4,7 +4,7 @@
 <a href="https://modrinth.com/mod/HIk2BLBJ/versions" target="_blank">
         <img src="https://img.shields.io/modrinth/v/HIk2BLBJ?label=release&color=informational&logo=Modrinth" alt="release">
     </a>
- <a href="https://github.com/Armandukx/BetterSprint/blob/1.8.9/COPYING" target="_blank">dfdf
+ <a href="https://github.com/Armandukx/BetterSprint/blob/master/COPYING" target="_blank">
         <img src="https://img.shields.io/badge/license-CC_BY_NC_ND_4.0-blue" alt="license">
     </a>
     <a href="https://discord.gg/MGrNJqsqZt" target="_blank">
@@ -40,4 +40,4 @@ For seamless installation and optimal utilization of the mod, don't hesitate to 
 
 # 📄License
 
-This project operates under the Attribution-NonCommercial-NoDerivatives 4.0 International, ensuring open-source accessibility. For further information, please refer to the [LICENSE](https://github.com/Armandukx/BetterSprint/123123/COPYING)dfdf file.
+This project operates under the Attribution-NonCommercial-NoDerivatives 4.0 International, ensuring open-source accessibility. For further information, please refer to the [LICENSE](https://github.com/Armandukx/BetterSprint/blob/master/COPYING) file.

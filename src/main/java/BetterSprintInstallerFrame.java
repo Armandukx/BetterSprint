@@ -1,22 +1,4 @@
-/*
- * IdleTweaks - Enhances performance while Minecraft runs in the background
- * Copyright (c) 2023 Armandukx
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-import io.armandukx.idletweaks.IdleTweaks;
+import io.armandukx.bettersprint.BetterSprint;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -35,30 +17,24 @@ import java.util.Objects;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
-public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, MouseListener {
+public class BetterSprintInstallerFrame extends JFrame implements ActionListener, MouseListener {
 
     private static final Pattern IN_MODS_SUBFOLDER = Pattern.compile("1\\.8\\.9[/\\\\]?$");
+    private static final int TOTAL_HEIGHT = 442; //435
+    private static final int TOTAL_WIDTH = 404;
     private JLabel logo = null;
     private JLabel versionInfo = null;
     private JLabel labelFolder = null;
-
     private JPanel panelCenter = null;
     private JPanel panelBottom = null;
     private JPanel totalContentPane = null;
-
     private JTextArea descriptionText = null;
     private JTextArea forgeDescriptionText = null;
-
     private JTextField textFieldFolderLocation = null;
     private JButton buttonChooseFolder = null;
-
     private JButton buttonInstall = null;
     private JButton buttonOpenFolder = null;
     private JButton buttonClose = null;
-
-    private static final int TOTAL_HEIGHT = 442; //435
-    private static final int TOTAL_WIDTH = 404;
-
     private int x = 0;
     private int y = 0; 
 
@@ -66,10 +42,10 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
     private int h;
     private int margin;
 
-    public IdleTweaksInstallerFrame() {
+    public BetterSprintInstallerFrame() {
         try {
-            setName("IdleTweaksInstallerFrame");
-            setTitle("IDT Installer");
+            setName("BetterSprintInstallerFrame");
+            setTitle("BSM Installer");
             setResizable(false);
             setSize(TOTAL_WIDTH, TOTAL_HEIGHT);
             setContentPane(getPanelContentPane());
@@ -94,13 +70,33 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            IdleTweaksInstallerFrame frame = new IdleTweaksInstallerFrame();
+            BetterSprintInstallerFrame frame = new BetterSprintInstallerFrame();
             frame.centerFrame(frame);
             frame.setVisible(true);
 
         } catch (Exception ex) {
             showErrorPopup(ex);
         }
+    }
+
+    private static String getStacktraceText(Throwable ex) {
+        StringWriter stringWriter = new StringWriter();
+        ex.printStackTrace(new PrintWriter(stringWriter));
+        return stringWriter.toString().replace("\t", "  ");
+    }
+
+    private static void showErrorPopup(Throwable ex) {
+        ex.printStackTrace();
+
+        JTextArea textArea = new JTextArea(getStacktraceText(ex));
+        textArea.setEditable(false);
+        Font currentFont = textArea.getFont();
+        Font newFont = new Font(Font.MONOSPACED, currentFont.getStyle(), currentFont.getSize());
+        textArea.setFont(newFont);
+
+        JScrollPane errorScrollPane = new JScrollPane(textArea);
+        errorScrollPane.setPreferredSize(new Dimension(600, 400));
+        JOptionPane.showMessageDialog(null, errorScrollPane, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private JPanel getPanelContentPane() {
@@ -145,7 +141,7 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
                 margin = 5;
 
                 BufferedImage myPicture = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader()
-                        .getResourceAsStream("assets/idletweaks/textures/logo.png"), "Logo not found."));
+                        .getResourceAsStream("assets/bettersprint/textures/logo.png"), "Logo not found."));
                 Image scaled = myPicture.getScaledInstance(w-margin*2, h-margin, Image.SCALE_SMOOTH);
                 logo = new JLabel(new ImageIcon(scaled));
                 logo.setName("logo");
@@ -169,11 +165,11 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
 
                 versionInfo = new JLabel();
                 versionInfo.setName("LabelMcVersion");
-                versionInfo.setBounds(x, y+1, w, h); 
+                versionInfo.setBounds(x, y+1, w, h);
                 versionInfo.setFont(new Font(Font.DIALOG, Font.BOLD, 14));
                 versionInfo.setHorizontalAlignment(SwingConstants.CENTER);
                 versionInfo.setPreferredSize(new Dimension(w, h));
-                versionInfo.setText("<html><body>IdleTweaks - Installer by Biscuit<br><center> for Minecraft 1.8.9</center></body></html>");
+                versionInfo.setText("<html><body>BetterSprint - Installer by Biscuit<br><center> for Minecraft 1.8.9</center></body></html>");
 
                 y += h-5;
             } catch (Throwable ivjExc) {
@@ -182,7 +178,6 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
         }
         return versionInfo;
     }
-
 
     private JTextArea getTextArea() {
         if (descriptionText == null) {
@@ -193,7 +188,7 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
                 descriptionText = new JTextArea();
                 descriptionText.setName("TextArea");
                 setTextAreaProperties(descriptionText);
-                descriptionText.setText("This installer will copy IdleTweaks into your forge mods folder for you, and replace any old versions that already exist. " +
+                descriptionText.setText("This installer will copy BetterSprint into your forge mods folder for you, and replace any old versions that already exist. " +
                         "Close this if you prefer to do this yourself!");
                 descriptionText.setWrapStyleWord(true);
 
@@ -296,7 +291,7 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
 
             try {
                 BufferedImage myPicture = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader()
-                        .getResourceAsStream("assets/idletweaks/textures/folder.png"), "Folder icon not found."));
+                        .getResourceAsStream("assets/bettersprint/textures/folder.png"), "Folder icon not found."));
                 Image scaled = myPicture.getScaledInstance(w-8, h-6, Image.SCALE_SMOOTH);
                 buttonChooseFolder = new JButton(new ImageIcon(scaled));
                 buttonChooseFolder.setName("ButtonFolder");
@@ -439,7 +434,7 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
         if (thisFile != null) {
             boolean inSubFolder = IN_MODS_SUBFOLDER.matcher(modsFolder.getPath()).find();
 
-            File newFile = new File(modsFolder, "IdleTweaks-" + IdleTweaks.VERSION + ".jar");
+            File newFile = new File(modsFolder, "BetterSprint-" + BetterSprint.VERSION + ".jar");
 
             if (thisFile.equals(newFile)) {
                 showErrorMessage("You are opening this file from where the file should be installed... there's nothing to be done!");
@@ -448,18 +443,18 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
 
             boolean deletingFailure = false;
             if (modsFolder.isDirectory()) { // Delete in this current folder.
-                boolean failed = findIDTAndDelete(modsFolder.listFiles());
+                boolean failed = findBSMAndDelete(modsFolder.listFiles());
                 if (failed) deletingFailure = true;
             }
             if (inSubFolder) { // We are in the 1.8.9 folder, delete in the parent folder as well.
                 if (modsFolder.getParentFile().isDirectory()) {
-                    boolean failed = findIDTAndDelete(modsFolder.getParentFile().listFiles());
+                    boolean failed = findBSMAndDelete(modsFolder.getParentFile().listFiles());
                     if (failed) deletingFailure = true;
                 }
             } else { // We are in the main mods folder, but the 1.8.9 subfolder exists... delete in there too.
                 File subFolder = new File(modsFolder, "1.8.9");
                 if (subFolder.exists() && subFolder.isDirectory()) {
-                    boolean failed = findIDTAndDelete(subFolder.listFiles());
+                    boolean failed = findBSMAndDelete(subFolder.listFiles());
                     if (failed) deletingFailure = true;
                 }
             }
@@ -478,13 +473,13 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
                 return;
             }
 
-            showMessage("IdleTweaks has been successfully installed into your mods folder.");
+            showMessage("BetterSprint has been successfully installed into your mods folder.");
             dispose();
             System.exit(0);
         }
     }
 
-    private boolean findIDTAndDelete(File[] files) {
+    private boolean findBSMAndDelete(File[] files) {
         if (files == null) return false;
 
         for (File file : files) {
@@ -495,7 +490,7 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
                     if (mcModInfo != null) {
                         InputStream inputStream = jarFile.getInputStream(mcModInfo);
                         String modID = getModIDFromInputStream(inputStream);
-                        if (modID.equals("idletweaks")) {
+                        if (modID.equals("bettersprint")) {
                             jarFile.close();
                             try {
                                 boolean deleted = file.delete();
@@ -504,7 +499,7 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
                                 }
                             } catch (Exception ex) {
                                 ex.printStackTrace();
-                                showErrorMessage("Was not able to delete the other IDT files found in your mods folder!" + System.lineSeparator() +
+                                showErrorMessage("Was not able to delete the other BSM files found in your mods folder!" + System.lineSeparator() +
                                         "Please make sure that your minecraft is currently closed and try again, or feel" + System.lineSeparator() +
                                         "free to open your mods folder and delete those files manually.");
                                 return true;
@@ -605,39 +600,11 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
     }
 
     public void showMessage(String message) {
-        JOptionPane.showMessageDialog(null, message, "IdleTweaks", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, message, "BetterSprint", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void showErrorMessage(String message) {
-        JOptionPane.showMessageDialog(null, message, "IdleTweaks - Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    public enum OperatingSystem {
-        LINUX,
-        SOLARIS,
-        WINDOWS,
-        MACOS,
-        UNKNOWN
-    }
-
-    private static String getStacktraceText(Throwable ex) {
-        StringWriter stringWriter = new StringWriter();
-        ex.printStackTrace(new PrintWriter(stringWriter));
-        return stringWriter.toString().replace("\t", "  ");
-    }
-
-    private static void showErrorPopup(Throwable ex) {
-        ex.printStackTrace();
-
-        JTextArea textArea = new JTextArea(getStacktraceText(ex));
-        textArea.setEditable(false);
-        Font currentFont = textArea.getFont();
-        Font newFont = new Font(Font.MONOSPACED, currentFont.getStyle(), currentFont.getSize());
-        textArea.setFont(newFont);
-
-        JScrollPane errorScrollPane = new JScrollPane(textArea);
-        errorScrollPane.setPreferredSize(new Dimension(600, 400));
-        JOptionPane.showMessageDialog(null, errorScrollPane, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, message, "BetterSprint - Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private String getModIDFromInputStream(InputStream inputStream) {
@@ -659,7 +626,7 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
 
     private File getThisFile() {
         try {
-            return new File(IdleTweaksInstallerFrame.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            return new File(BetterSprintInstallerFrame.class.getProtectionDomain().getCodeSource().getLocation().toURI());
         } catch (URISyntaxException ex) {
             showErrorPopup(ex);
         }
@@ -677,4 +644,12 @@ public class IdleTweaksInstallerFrame extends JFrame implements ActionListener, 
 
     @Override
     public void mouseExited(MouseEvent e) {}
+
+    public enum OperatingSystem {
+        LINUX,
+        SOLARIS,
+        WINDOWS,
+        MACOS,
+        UNKNOWN
+    }
 }

@@ -4,7 +4,6 @@ import io.armandukx.bettersprint.util.UpdateChecker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -13,8 +12,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
-
-import java.awt.*;
 
 
 @Mod(
@@ -55,10 +52,10 @@ public class BetterSprint {
             if (toggle.isPressed()) {
                 sprint = !sprint;
                 if (!sprint && key > 0) {
-                    toggle.setKeyBindState(key, Keyboard.isKeyDown(key));
+                    KeyBinding.setKeyBindState(key, Keyboard.isKeyDown(key));
                 }
             }
-            toggle.setKeyBindState(key, sprint);
+            KeyBinding.setKeyBindState(key, sprint);
         }
     }
 }
