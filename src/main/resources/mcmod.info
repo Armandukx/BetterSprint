@@ -1,0 +1,14 @@
+[
+  {
+    "modid": "${modid}",
+    "name": "Better Sprint",
+    "description": "Adds toggleable sprinting, eliminating the need to hold down the sprint button.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/Armandukx/BetterSprint/",
+    "authorList": [
+      "Armandukx"
+    ],
+    "logoFile": "logo.png"
+  }
+]
