@@ -3,7 +3,7 @@ plugins {
     java
     id("gg.essential.loom") version "0.10.0.+"
     id("dev.architectury.architectury-pack200") version "0.1.3"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 //Constants:
@@ -12,27 +12,32 @@ val baseGroup: String by project
 val mcVersion: String by project
 val version: String by project
 val mixinGroup = "$baseGroup.mixin"
-val modid: String by project
+val modid = rootProject.name.toLowerCase()
 
+// Toolchains:
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
+// Minecraft configuration:
 loom {
     log4jConfigs.from(file("log4j2.xml"))
     launchConfigs {
         "client" {
+
         }
     }
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
+        mixinConfig("mixins.armandukx.json")
     }
 }
 
 sourceSets.main {
-    output.resourcesDir = file("$buildDir/classes/java/main")
+    output.setResourcesDir(file("$buildDir/classes/java/main"))
 }
 
+// Dependencies:
 
 repositories {
     mavenCentral()
@@ -44,11 +49,13 @@ val shadowImpl: Configuration by configurations.creating {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:1.8.9")
-    mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
-    forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
+    minecraft("com.mojang:minecraft:1.12.2")
+    mappings("de.oceanlabs.mcp:mcp_stable:39-1.12")
+    forge("net.minecraftforge:forge:1.12.2-14.23.5.2847")
 
 }
+
+// Tasks:
 
 tasks.withType(JavaCompile::class) {
     options.encoding = "UTF-8"
@@ -60,6 +67,7 @@ tasks.withType(Jar::class) {
         this["Main-Class"] = "BetterSprintInstallerFrame"
         this["FMLCorePluginContainsFMLMod"] = "true"
         this["ForceLoadAsMod"] = "true"
+        this["MixinConfigs"] = "mixins.armandukx.json"
     }
 }
 
@@ -69,7 +77,7 @@ tasks.processResources {
     inputs.property("modid", modid)
     inputs.property("mixinGroup", mixinGroup)
 
-    filesMatching(listOf("mcmod.info", "mixins.$modid.json")) {
+    filesMatching(listOf("mcmod.info")) {
         expand(inputs.properties)
     }
 

@@ -169,7 +169,7 @@ public class BetterSprintInstallerFrame extends JFrame implements ActionListener
                 versionInfo.setFont(new Font(Font.DIALOG, Font.BOLD, 14));
                 versionInfo.setHorizontalAlignment(SwingConstants.CENTER);
                 versionInfo.setPreferredSize(new Dimension(w, h));
-                versionInfo.setText("<html><body>BetterSprint - Installer by Biscuit<br><center> for Minecraft 1.8.9</center></body></html>");
+                versionInfo.setText("<html><body>BetterSprint - Installer by Biscuit<br><center> for Minecraft 1.12.2</center></body></html>");
 
                 y += h-5;
             } catch (Throwable ivjExc) {
@@ -227,7 +227,7 @@ public class BetterSprintInstallerFrame extends JFrame implements ActionListener
 
 
 
-                forgeDescriptionText.setText("However, you still need to install Forge client in order to be able to run this mod. Click here to visit the download page for Forge 1.8.9!");
+                forgeDescriptionText.setText("However, you still need to install Forge client in order to be able to run this mod. Click here to visit the download page for Forge 1.12.2!");
                 forgeDescriptionText.setForeground(Color.BLUE.darker());
                 forgeDescriptionText.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 forgeDescriptionText.setWrapStyleWord(true);
@@ -404,7 +404,7 @@ public class BetterSprintInstallerFrame extends JFrame implements ActionListener
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == getForgeTextArea()) {
             try {
-                Desktop.getDesktop().browse(new URI("http://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.8.9.html"));
+                Desktop.getDesktop().browse(new URI("http://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.12.2.html"));
             } catch (IOException | URISyntaxException ex) {
                 showErrorPopup(ex);
             }
@@ -446,13 +446,13 @@ public class BetterSprintInstallerFrame extends JFrame implements ActionListener
                 boolean failed = findBSMAndDelete(modsFolder.listFiles());
                 if (failed) deletingFailure = true;
             }
-            if (inSubFolder) { // We are in the 1.8.9 folder, delete in the parent folder as well.
+            if (inSubFolder) { // We are in the 1.12.2 folder, delete in the parent folder as well.
                 if (modsFolder.getParentFile().isDirectory()) {
                     boolean failed = findBSMAndDelete(modsFolder.getParentFile().listFiles());
                     if (failed) deletingFailure = true;
                 }
-            } else { // We are in the main mods folder, but the 1.8.9 subfolder exists... delete in there too.
-                File subFolder = new File(modsFolder, "1.8.9");
+            } else { // We are in the main mods folder, but the 1.12.2 subfolder exists... delete in there too.
+                File subFolder = new File(modsFolder, "1.12.2");
                 if (subFolder.exists() && subFolder.isDirectory()) {
                     boolean failed = findBSMAndDelete(subFolder.listFiles());
                     if (failed) deletingFailure = true;
@@ -527,7 +527,7 @@ public class BetterSprintInstallerFrame extends JFrame implements ActionListener
     public File getModsFolder() {
         String userHome = System.getProperty("user.home", ".");
 
-        File modsFolder = getFile(userHome, "minecraft/mods/1.8.9");
+        File modsFolder = getFile(userHome, "minecraft/mods/1.12.2");
         if (!modsFolder.exists()) {
             modsFolder = getFile(userHome, "minecraft/mods");
         }
